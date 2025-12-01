@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.cache
+*.pyc
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+*.orig
+temp/
+**/temp/
+temp*
+**/temp*
+check*
+check*/
+
+# Checkpoints & Scaler
+*.pt
+*.pkl
+
+# Package archives
+*.zip
+*.tar
+*.gz
+
+# Models
+models
+.locks
+
+# nltk data
+nltk_data/
+
+# Logs
+logs/

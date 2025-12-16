@@ -1,63 +1,66 @@
 import os
-import nltk
-import random
 import pandas as pd
 from tqdm import tqdm
 from utils import load_split_dataset
 from augmentation import *
 
-def synonym_replacor(df):
-    df = df.copy()
-    df.insert(0, "id", range(len(df)))  # id as the first column
 
-    augmented_rows = []
-    for _, row in tqdm(df.iterrows(), total=df.shape[0], desc="Processing Rows for Synonym_Replacement"):
-        text = row["text"]
-        new_text = synonym_replace(text, n_per_sentence=2)
+class DataAugmentor:
+    def __init__(self, aug_type):
+        self.aug_type = aug_type
+        self.project_dir = os.path.dirname(os.path.abspath(__file__))
+        self.dataset_path = os.path.join(self.project_dir, "dataset")
+        self.file_path = os.path.join(self.dataset_path, "essay_training_with_id.csv")
 
-        new_row = row.copy()
-        new_row["text"] = new_text
-        augmented_rows.append(new_row)
-    
-    df_aug = pd.concat([df, pd.DataFrame(augmented_rows)], ignore_index=True)
-    df_aug = df_aug.rename(columns={"text": "TEXT"})        # For name consistency in training (should be solved later)
-    return df_aug
+    def synonym_replacor(self, df):
+        df = df.copy()
+        df.insert(0, "id", range(len(df)))  # id as the first column
 
-def contextual_augmentor(df):
-    augmentor = ContextualAugmentor()
+        augmented_rows = []
+        for _, row in tqdm(df.iterrows(), total=df.shape[0], desc="Processing Rows for Synonym_Replacement"):
+            text = row["text"]
+            new_text = synonym_replace(text, n_per_sentence=2)
 
-    augmented_rows = []
+            new_row = row.copy()
+            new_row["text"] = new_text
+            augmented_rows.append(new_row)
 
-    for _, row in tqdm(df.iterrows(), total=df.shape[0], desc="Contextual Augmentation"):
-        original_text = row["text"]
-        new_text = augmentor.augment_text(original_text)
+        df_aug = pd.concat([df, pd.DataFrame(augmented_rows)], ignore_index=True)
+        df_aug = df_aug.rename(columns={"text": "TEXT"})
+        return df_aug
 
-        new_row = row.copy()
-        new_row["text"] = new_text
-        augmented_rows.append(new_row)
+    def contextual_augmentor(self, df):
+        augmentor = ContextualAugmentor()
+        augmented_rows = []
 
-    df_aug = pd.concat([df, pd.DataFrame(augmented_rows)], ignore_index=True)
+        for _, row in tqdm(df.iterrows(), total=df.shape[0], desc="Contextual Augmentation"):
+            original_text = row["text"]
+            new_text = augmentor.augment_text(original_text)
 
-    return df_aug
+            new_row = row.copy()
+            new_row["text"] = new_text
+            augmented_rows.append(new_row)
 
-def main(aug_type):
-    project_dir = os.path.dirname(os.path.abspath(__file__))
-    dataset_path = os.path.join(project_dir, "dataset")
-    file_path = os.path.join(dataset_path, "essay_training_with_id.csv")
-    df = load_split_dataset(file_path, "All", split=False)
+        df_aug = pd.concat([df, pd.DataFrame(augmented_rows)], ignore_index=True)
+        return df_aug
 
-    if aug_type == "synonym":
-        output_file_path = os.path.join(dataset_path, "augmentation/synonym_replacement/augmented_syn.csv")
-        df_aug = synonym_replacor(df)
-    
-    elif aug_type == "contextual":
-        output_file_path = os.path.join(dataset_path, "augmentation/contextual_augmentation/augmented_contextual.csv")
-        df_aug = contextual_augmentor(df)
+    def run(self):
+        df = load_split_dataset(self.file_path, "All", split=False)
 
-    else:
-        print("This option is not implemented")
+        if self.aug_type == "synonym":
+            output_file_path = os.path.join(self.dataset_path, "augmentation/synonym_replacement/augmented_syn.csv")
+            df_aug = self.synonym_replacor(df)
 
-    df_aug.to_csv(output_file_path, index=False)
+        elif self.aug_type == "contextual":
+            output_file_path = os.path.join(self.dataset_path, "augmentation/contextual_augmentation/augmented_contextual.csv")
+            df_aug = self.contextual_augmentor(df)
+
+        else:
+            print("This option is not implemented")
+            return
+
+        df_aug.to_csv(output_file_path, index=False)
+
 
 if __name__ == "__main__":
-    main(aug_type="synonym")
+    DataAugmentor(aug_type="synonym").run()

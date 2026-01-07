@@ -212,6 +212,16 @@ If you use this repository, please cite the associated papers:
   publisher={University of Science and Culture}
   doi={http://dx.doi.org/10.22133/ijwr.2025.543527.1305}
 }
+
+@conference{saberi2025personality,
+  title={Personality Recognition Using Transformer Model: A Study on the Big Five Traits},
+  author={Saberi, Hossein and Ghofrani, Sara and Ravanmehr, Reza},
+  conference={2025 11th International Conference on Web Research (ICWR)},
+  pages={228-234},
+  year={2025},
+  publisher={IEEE}
+  doi={https://doi.org/10.1109/ICWR65219.2025.11006181}
+}
 ```
 
 ---

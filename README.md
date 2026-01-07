@@ -208,7 +208,7 @@ If you use this repository, please cite the associated papers:
   journal={International Journal of Web Research},
   volume={9},
   pages={1-24},
-  year={2024},
+  year={2026},
   publisher={University of Science and Culture}
   doi={http://dx.doi.org/10.22133/ijwr.2025.543527.1305}
 }

@@ -199,11 +199,19 @@ All training/evaluation curves, PR/ROC results, and metrics are reproducible thr
 
 ## Citation
 
-If you use this repository, please cite the associated manuscript:
+If you use this repository, please cite the associated papers:
 
-```
-Saberi & Ravanmehr. 
-"Transformer-Based Personality Trait Recognition Enhanced by Contextual Augmentation" (2025).
+```bibtex
+@article{saberi2026personality,
+  title={Transformer-Based Personality Trait Recognition Enhanced by Contextual Augmentation},
+  author={Saberi, Hossein and Ravanmehr, Reza},
+  journal={International Journal of Web Research},
+  volume={9},
+  pages={1-24},
+  year={2024},
+  publisher={University of Science and Culture}
+  doi={[https://doi.org/10.1016/j.engappai.2024.107908](http://dx.doi.org/10.22133/ijwr.2025.543527.1305)}
+}
 ```
 
 ---

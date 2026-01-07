@@ -210,7 +210,7 @@ If you use this repository, please cite the associated papers:
   pages={1-24},
   year={2024},
   publisher={University of Science and Culture}
-  doi={[https://doi.org/10.1016/j.engappai.2024.107908](http://dx.doi.org/10.22133/ijwr.2025.543527.1305)}
+  doi={http://dx.doi.org/10.22133/ijwr.2025.543527.1305}
 }
 ```
 
